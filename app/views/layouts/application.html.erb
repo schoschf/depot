@@ -8,21 +8,31 @@
 <%= csrf_meta_tag %>
 </head>
 <body id="store" >
-<div id="banner" >
-<%= image_tag("logo.png") %>
-<%= @page_title || "Pragmatic Bookshelf" %>
-</div>
-<div id="columns" >
-<div id="side" >
-<a href="http://www...." >Home</a><br />
-<a href="http://www..../faq" >Questions</a><br />
-<a href="http://www..../news" >News</a><br />
-<a href="http://www..../contact" >Contact</a><br />
-</div>
-<div id="main" >
-<%= yield %>
-</div>
-</div>
+  
+  <div id="banner" >
+    <%= image_tag("logo.png") %>
+    <%= @page_title || "Pragmatic Bookshelf" %>
+  </div>
+  
+  <div id="columns" >
+  
+    <div id="side" >
+      <%= link_to "Home",store_path %> <br />
+      <a href="#faq" >Questions</a><br />
+      <a href="#news" >News</a><br />
+      <a href="contact" >Contact</a><br />
+      <div class="white">
+        Date: <%= Time.now.strftime( t("time_format") + t("hour") ) %><br/>
+        You hit store#index <%= pluralize(session[:store_index_hits],'time') %>
+      </div>
+    </div>
+    
+    <div id="main" >
+      <%= yield %>
+    </div>
+    
+  </div>
+  
 </body>
 </html>
 

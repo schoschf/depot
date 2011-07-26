@@ -2,7 +2,8 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  time_format: "%Y-%m-%d %H:%M"
+  hour: "h"
   
   activerecord:
     errors:
