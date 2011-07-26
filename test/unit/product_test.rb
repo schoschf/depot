@@ -19,33 +19,32 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "product price must be positive" do
-    product = Product.new(:title       => "My Book Title",
+    product = Product.new(:title       => "1234567890",
                           :description => "yyy",
                           :image_url   => "zzz.jpg")
     product.price = -1
     assert product.invalid?
     assert_equal "must be greater than or equal to 0.01", 
-      product.errors[:price].join('; ')
+      product.errors[:price].join
 
     product.price = 0
     assert product.invalid?
     assert_equal "must be greater than or equal to 0.01", 
-      product.errors[:price].join('; ')
+      product.errors[:price].join
 
     product.price = 1
     assert product.valid?
   end
 
   def new_product(image_url)
-    Product.new(:title       => "My Book Title",
+    Product.new(:title       => "1234567890",
                 :description => "yyy",
                 :price       => 1,
                 :image_url   => image_url)
   end
 
   test "image url" do
-    ok = %w{ fred.gif fred.jpg fred.png FRED.JPG FRED.Jpg
-             http://a.b.c/x/y/z/fred.gif }
+    ok = %w{ fred.gif fred.jpg fred.png FRED.JPG FRED.Jpg http://a.b.c/x/y/z/fred.gif }
     bad = %w{ fred.doc fred.gif/more fred.gif.more }
     
     ok.each do |name|
@@ -57,15 +56,29 @@ class ProductTest < ActiveSupport::TestCase
     end
   end
 
+ 
+  test "product title must not exceed 30 chars" do
+    product = Product.new(:title       => "1234567890123456789012345678901", # 31
+                          :description => "yyy", 
+                          :price       => 1, 
+                          :image_url   => "fred.gif")
+    
+    assert !product.save
+    #p product.inspect
+    assert_equal I18n.translate('activerecord.errors.messages.too_long',:count=>Product::MAX_TITLE_LENGTH),
+                  product.errors[:title].join
+  end
+
+
   test "product is not valid without a unique title - i18n" do
-    product = Product.new(:title       => products(:ruby).title,
+    product = Product.new(:title       => products(:one).title,
                           :description => "yyy", 
                           :price       => 1, 
                           :image_url   => "fred.gif")
 
     assert !product.save
     assert_equal I18n.translate('activerecord.errors.messages.taken'),
-                 product.errors[:title].join('; ')
+                 product.errors[:title].join
   end
   
 end

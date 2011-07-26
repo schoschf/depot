@@ -3,3 +3,9 @@
 
 en:
   hello: "Hello world"
+  
+  activerecord:
+    errors:
+      messages:
+        too_long: "is too long (maximum is %{count} characters)"
+        taken: "is already in DB. Please choose another one"
