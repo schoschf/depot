@@ -57,10 +57,7 @@ class ProductTest < ActiveSupport::TestCase
   end
 
  
-  test "product title must not exceed 30 chars" do
-    
-    p 31.times(sprintf( "%s","o"))
-    
+  test "product title must not exceed 30 chars" do    
     product = Product.new(:title       => "1234567890123456789012345678901", # 31
                           :description => "yyy", 
                           :price       => 1, 

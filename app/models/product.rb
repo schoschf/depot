@@ -16,6 +16,8 @@ class Product < ActiveRecord::Base
   
   default_scope :order => 'title'
   
+  
+    
   private
   
   # ensure that there are no line items referencing this product
@@ -26,8 +28,6 @@ class Product < ActiveRecord::Base
       errors.add(:base, 'Line Items present')
       return false
     end
-
   end
-
 
 end

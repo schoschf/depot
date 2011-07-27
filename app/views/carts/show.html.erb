@@ -1,7 +1,19 @@
-<h2>Your Pragmatic Cart</h2>
-<ul>
-<% @cart.line_items.each do |item| %>
-  <li><%= item.quantity %> &times; <%= item.product.title %></li>
-<% end %>
-</ul>
+<div class="cart_title" >Your Cart</div>
+<table>
+  <% @cart.line_items.each do |item| %>
+  <tr>
+    <td><%= item.quantity %>&times;</td>
+    <td><%= item.product.title %></td>
+    <td class="item_price" ><%= localized_price(item.total_price) %></td>
+  </tr>
+  <% end %>
+  <tr class="total_line" >
+    <td colspan="2" >Total</td>
+    <td class="total_cell" ><%= localized_price(@cart.total_price) %></td>
+  </tr>
+</table>
+<%= button_to 'Empty cart', @cart, :method => :delete,
+:confirm => 'Are you sure?' %>
+
+
   

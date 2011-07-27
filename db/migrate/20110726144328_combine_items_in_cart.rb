@@ -28,23 +28,9 @@ class CombineItemsInCart < ActiveRecord::Migration
         LineItem.create :cart_id=>line_item.cart_id, :product_id=>line_item.product_id, :quantity=>1
       end
       # remove original item
-      line_item.destroy
+      #line_item.destroy # book version
+      line_item.delete # vollhorst's version
     end
-
-
-    ### Algorithm coming from vollhorst
-    #Cart.all.each do |cart|
-    #  cart.line_items.each do |line_item|
-    #    i = 0
-    #    if line_item.quantity > 1          
-    #      while i < line_item.quantity do
-    #        cart.line_items.create(:product_id=>line_item.product_id, :quantity=>1)
-    #        i +=1
-    #      end
-    #      cart.line_items.where(:id=>line_item.id).delete_all
-    #    end        
-    #  end      
-    #end
     
   end  
   
